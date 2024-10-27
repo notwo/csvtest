@@ -1,5 +1,6 @@
 *.gem
 *.rbc
+/.github
 /.config
 /coverage/
 /InstalledFiles
