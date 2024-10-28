@@ -1,0 +1,48 @@
+<section class="container">
+  <% if flash[:fail] %>
+    <div class="alert alert-success"><%= flash[:fail] %></div>
+  <% end %>
+
+  <%= form_with url: estimate_requests_path do |form| %>
+    <div class="mb-3">
+      <label for="requestNumber" class="col-form-label">番号を入力</label>
+      <%= form.number_field :request_number, id: 'requestNumber', class: 'form-control', placeholder: "123456" %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "登録", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <hr>
+
+  <%= form_with url: estimate_requests_path do |form| %>
+    <div class="mb-3">
+      <label for="requestNumberCsv" class="col-form-label">CSVファイルを選択</label>
+      <%= form.file_field :request_number_csv, id: 'requestNumberCsv', class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "登録", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="row">リクエスト日時</th>
+          <th scope="row">番号</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list.each do |estimate| %>
+          <tr>
+            <td><%= estimate.created_at %></td>
+            <td><%= estimate.request_number %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%= javascript_include_tag 'controllers/index', crossorigin: "anonymous" %>
