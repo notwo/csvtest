@@ -1,6 +1,8 @@
 require 'csv'
 
 class EstimateRequestsController < ApplicationController
+  CSV_AU_COLUMN = 48
+
   def index
     estimates = Estimate.all
     page = params[:page].to_i rescue 1
@@ -8,8 +10,6 @@ class EstimateRequestsController < ApplicationController
   end
 
   def create
-    #raise params.inspect
-
     if params.key?(:request_number)
       proceed_single_number(params[:request_number].to_i)
     elsif params.key?(:request_number_csv)
@@ -25,8 +25,8 @@ class EstimateRequestsController < ApplicationController
     Estimate.create!(request_number: request_number)
     flash[:success] = "番号#{request_number}をリクエストしました"
 
-    # csv出力
     # delayedjobに登録
+    RecordCleanupJob.perform_later [request_number]
   end
 
   def proceed_multple_numbers(request_number_csv)
@@ -36,15 +36,17 @@ class EstimateRequestsController < ApplicationController
     end
 
     file = request_number_csv.tempfile
-    rows = []
+    request_numbers = []
     CSV.foreach(file) do |row|
-      rows.push row
+      request_numbers.push row[CSV_AU_COLUMN-1]
     end
-    raise rows.inspect
-    #data = request_number_csv.read.split(/\r|\n|\r\n/)
-    raise data.inspect
-    # csv出力
+
+    estimates = request_numbers.uniq.map { |request_number| { request_number: request_number, created_at: Time.current, updated_at: Time.current } }
+    Estimate.insert_all estimates
+
     # delayedjobに登録
-    # dbに登録
+    RecordCleanupJob.perform_later request_numbers
+
+    flash[:success] = "csvファイル「#{request_number_csv.original_filename}」記載の番号をリクエストしました"
   end
 end

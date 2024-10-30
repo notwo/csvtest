@@ -1,6 +1,9 @@
 <section class="container">
   <% if flash[:fail] %>
-    <div class="alert alert-success"><%= flash[:fail] %></div>
+    <div class="alert alert-danger"><b><%= flash[:fail] %></b></div>
+  <% end %>
+  <% if flash[:success] %>
+    <div class="alert alert-success"><b><%= flash[:success] %></b></div>
   <% end %>
 
   <%= form_with url: estimate_requests_path do |form| %>
