@@ -24,6 +24,7 @@ gem 'sassc-rails'
 
 # paging
 gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

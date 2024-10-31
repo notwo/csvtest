@@ -1,4 +1,8 @@
 <section class="container">
+  <section>
+    <span class="fs-2">番号を入力するか、CSVファイルを選択してください。</span>
+  </section>
+
   <% if flash[:fail] %>
     <div class="alert alert-danger"><b><%= flash[:fail] %></b></div>
   <% end %>
@@ -8,7 +12,7 @@
 
   <%= form_with url: estimate_requests_path do |form| %>
     <div class="mb-3">
-      <label for="requestNumber" class="col-form-label">番号を入力</label>
+      <label for="requestNumber" class="col-form-label fs-4">番号を入力</label>
       <%= form.number_field :request_number, id: 'requestNumber', class: 'form-control', placeholder: "123456" %>
     </div>
     <div class="mb-3">
@@ -20,7 +24,7 @@
 
   <%= form_with url: estimate_requests_path do |form| %>
     <div class="mb-3">
-      <label for="requestNumberCsv" class="col-form-label">CSVファイルを選択</label>
+      <label for="requestNumberCsv" class="col-form-label fs-4">CSVファイルを選択</label>
       <%= form.file_field :request_number_csv, id: 'requestNumberCsv', class: 'form-control' %>
     </div>
     <div class="mb-3">
@@ -46,6 +50,8 @@
       </tbody>
     </table>
   </div>
+
+  <%= paginate @list, theme: 'bootstrap-5' %>
 </section>
 
 <%= javascript_include_tag 'controllers/index', crossorigin: "anonymous" %>
