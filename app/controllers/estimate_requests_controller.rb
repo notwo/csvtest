@@ -26,7 +26,7 @@ class EstimateRequestsController < ApplicationController
     flash[:success] = "番号#{request_number}をリクエストしました"
 
     # delayedjobに登録
-    RecordCleanupJob.perform_later [request_number]
+    RecordRequestJob.perform_later [request_number]
   end
 
   def proceed_multple_numbers(request_number_csv)
@@ -45,7 +45,7 @@ class EstimateRequestsController < ApplicationController
     Estimate.insert_all estimates
 
     # delayedjobに登録
-    RecordCleanupJob.perform_later request_numbers
+    RecordRequestJob.perform_later request_numbers
 
     flash[:success] = "csvファイル「#{request_number_csv.original_filename}」記載の番号をリクエストしました"
   end

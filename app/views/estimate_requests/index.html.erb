@@ -43,7 +43,7 @@
       <tbody>
         <% @list.each do |estimate| %>
           <tr>
-            <td><%= estimate.created_at %></td>
+            <td><%= estimate.created_at.in_time_zone('Tokyo').strftime('%Y/%m/%d %H:%M:%S') %></td>
             <td><%= estimate.request_number %></td>
           </tr>
         <% end %>

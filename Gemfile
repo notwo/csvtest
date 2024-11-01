@@ -26,6 +26,10 @@ gem 'sassc-rails'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
 
+# delayedjob
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
