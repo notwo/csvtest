@@ -30,6 +30,9 @@ gem 'bootstrap5-kaminari-views'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+# on behalf of whenever
+gem 'clockwork'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
